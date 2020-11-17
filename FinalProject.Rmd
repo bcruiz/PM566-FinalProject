@@ -70,13 +70,15 @@ for (i in 1:length(county_list)) {
 }
 ```
 
-### Incidence Cases Across the Pandemic 
+<br>
+
+## Incidence Cases Across the Pandemic 
 ```{r COVID Visual by County, warning=FALSE, message=FALSE}
 p1<-ggplot(covidGithubmelt, aes(Date, new_cases, color = county))+
   geom_line()+
   geom_point(size = .5, alpha = 0.5)+
   labs(title = 'Incidences of Covid Cases in California by County', y = 'New cases', color = 'County')
-ggplotly(p1)
+ggplotly(p1, width = 800)
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -88,17 +90,20 @@ mapdf <- covidGithubmelt%>%
   rename(fips = FIPS)
 ```
 
+<br>
+
 ## Incidence Cases
 ```{r Spatial Visualization of COVID by County, warning=FALSE}
 incidence <- plot_usmap(data = mapdf, values='new_cases', include = 'CA')+
   scale_fill_continuous(low = 'white', high = 'red', name = 'Confirmed Cases', label = scales::comma)+
   labs(title = 'Incidence Cases by California County',
        subtitle = 'Source: Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)',
-       # caption = 'As of 11/12/2020')+
        caption = paste('As of ', as.Date(max(mapdf$Date))))+
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
 ```
+
+<br>
 
 ## Total Confirmed Cases
 ```{r Grand Total Confirmed Cases, warning=FALSE}
@@ -111,11 +116,13 @@ prevalence <- plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
 ```
 
+<br>
+
 ## Exploration of Covid Cases within California {.tabset}
 
 ### Incidence Figure 1
 ```{r, warning=FALSE, message=FALSE}
-ggplotly(incidence)
+ggplotly(incidence, width = 800)
 ```
 
 ### Prevalence Figure 2
@@ -124,6 +131,8 @@ prevalence
 ```
 
 ## {-}
+
+<br>
 
 ## US Census data of California
 ```{r Population Visualizations, warning=FALSE, message=FALSE}
@@ -143,10 +152,11 @@ Popmapdf <- CApop%>%
   rename(fips = COUNTY)
 ```
 
-### County Populations Within California
+<br>
+
+## County Populations Within California
 ```{r, warning=FALSE}
 plot_usmap(data = Popmapdf, values='TOT_POP', include = 'CA')+
-  #scale_fill_distiller(type = "seq", palette = "Spectral", direction = -1, name = "County Populations")+
   scale_fill_continuous(low = 'white', high = 'blue', name = 'Population', label = scales::comma)+
   labs(title = '2019 County Population Estimates', subtitle = 'Source: US Census')+
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
@@ -168,8 +178,9 @@ cvd_pop$per100k = as.numeric(format(round(cvd_pop$Confirmed/(cvd_pop$TOT_POP/100
                                       nsmall=1))
 ```
 
+<br>
 
-### Running Total of Confirmed Cases by Population of Counties
+## Running Total of Confirmed Cases by Population of Counties
 ```{r, warning=FALSE, message=FALSE}
 # Adding hoverinfo
 cvd_pop%>% 
@@ -178,12 +189,15 @@ cvd_pop%>%
           size = ~TOT_POP, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
           hoverinfo = 'text',
           text = ~paste( paste(county, ":", sep=""), paste(" Cases per 100k: ", per100k, sep=""),
-                         paste(' Population: ', TOT_POP, sep=""), sep = "<br>"))%>%
+                         paste(' Population: ', TOT_POP, sep=""), sep = "<br>"),
+          width = 800)%>%
   layout(title = "Covid Cases vs Population of Each County",
                   yaxis = list(title = "Cases per 100k"), xaxis = list(title = "Population"))
 ```
 
-## Air Quality Index
+<br>
+
+## Enviornmental Protection Agency (EPA) Air Quality Index
 ```{r, message=FALSE}
 # Daily AQI for every county in California
 csvAQI_data <- read_csv("data/ad_viz_plotval_data.csv")
@@ -219,20 +233,17 @@ AQI <- AQI%>%
   distinct()
 ```
 
+<br>
 
-```{r AQI Visual}
-#Visual is much better
-# x-axis every other county
-# csvAQI_data%>%
-#   plot_ly(x = ~COUNTY, y = ~DAILY_AQI_VALUE, type = 'box', color = ~COUNTY)%>%
-#   layout(title = 'Air Quality by California County', yaxis = list(title = 'AQI Value'),
-#          xaxis = list(title = 'County'))
-
+## Air Quality Within California
+```{r AQI Visual, message=FALSE, warning=FALSE}
 AQI%>%
-  plot_ly(x = ~COUNTY, y = ~MeanAQI, type = 'box', color = ~COUNTY)%>%
+  plot_ly(x = ~COUNTY, y = ~MeanAQI, type = 'box', color = ~COUNTY, width = 800)%>%
   layout(title = 'Air Quality by California County', yaxis = list(title = 'AQI Value'),
          xaxis = list(title = 'County'))
+```
 
+```{r, echo=FALSE}
 #Could save for another visual with Covid cases on AQI daily for LA County
 # AQI%>%
 #   filter(COUNTY == 'Los Angeles')%>%
@@ -244,3 +255,4 @@ AQI%>%
 #   layout(title = 'LA County', yaxis = list(title = 'AQI Value'),
 #          xaxis = list(title = 'Date'))
 ```
+
