@@ -2,7 +2,10 @@
 title: "PM 566 Final Project"
 author: "Brandyn Ruiz"
 date: "11/13/2020"
-output: html_document
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
@@ -19,6 +22,13 @@ library(ggrepel)
 library(plotly)
 ```
 
+# Website Home
+
+<br>
+
+When the pandemic first started in early March and the effects of the corona virus inhibiting a person's ability to breathe I first thought if our state's air pollution would also be a contributor to contracting the virus. With air pollution being so different in all of the 58 counties within California, I wanted to see if contracting confirmed cases of covid would also be on the rise if a person's breathing ability was already impacted by air pollution.
+
+<br>
 
 ## Covid Cases within the States
 ```{r Covid Github, message=FALSE, warning=FALSE}
@@ -74,10 +84,11 @@ for (i in 1:length(county_list)) {
 
 ## Incidence Cases Across the Pandemic 
 ```{r COVID Visual by County, warning=FALSE, message=FALSE}
+# Time series visual of incidence cases from the start of the pandemic
 p1<-ggplot(covidGithubmelt, aes(Date, new_cases, color = county))+
   geom_line()+
   geom_point(size = .5, alpha = 0.5)+
-  labs(title = 'Incidences of Covid Cases in California by County', y = 'New cases', color = 'County')
+  labs(title = 'Incidences of Covid Cases in California by County', y = 'New Cases', color = 'County')
 ggplotly(p1, width = 800)
 ```
 
@@ -122,11 +133,14 @@ prevalence <- plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
 
 ### Incidence Figure 1
 ```{r, warning=FALSE, message=FALSE}
+# Hover info of county FIPS code and covid cases within the county from the max date
 ggplotly(incidence, width = 800)
 ```
 
 ### Prevalence Figure 2
 ```{r, warning=FALSE, message=FALSE}
+# Grand total of covid cases at the start of the pandemic
+# until the max date being the day before
 prevalence
 ```
 
@@ -182,7 +196,7 @@ cvd_pop$per100k = as.numeric(format(round(cvd_pop$Confirmed/(cvd_pop$TOT_POP/100
 
 ## Running Total of Confirmed Cases by Population of Counties
 ```{r, warning=FALSE, message=FALSE}
-# Adding hoverinfo
+# Visual of how county population influences covid cases
 cvd_pop%>% 
   plot_ly(x = ~TOT_POP, y = ~Confirmed,
           type = 'scatter', mode = 'markers', color = ~county,
@@ -237,22 +251,69 @@ AQI <- AQI%>%
 
 ## Air Quality Within California
 ```{r AQI Visual, message=FALSE, warning=FALSE}
+# Averaged AQI for each county
 AQI%>%
   plot_ly(x = ~COUNTY, y = ~MeanAQI, type = 'box', color = ~COUNTY, width = 800)%>%
   layout(title = 'Air Quality by California County', yaxis = list(title = 'AQI Value'),
          xaxis = list(title = 'County'))
 ```
 
+<br>
+
+----
+
+<br>
+
+# New Page
+
+<br>
+
+## Combined Visuals
+```{r}
+# Stacked visuals of both AQI over covid cases during the pandemic
+
+# Air Quality over course of the pandemic
+line <- AQI%>%
+  filter(COUNTY == 'Los Angeles')%>%
+  plot_ly(x = ~Date, y = ~MeanAQI, type = 'scatter', mode = 'line',
+          hoverinfo = 'text',
+          text = ~paste( paste(COUNTY, ":", sep=""), paste(' Date: ', Date, sep = ''),
+                         paste(' Avg AQI: ', MeanAQI, sep=""), sep = "<br>"), width = 800)%>%
+  layout(title = 'Los Angeles County', yaxis = list(title = 'AQI Value'),
+         xaxis = list(title = 'Date'))
+
+# Incidences of covid cases over time
+line2 <- covidGithubmelt%>%
+  filter(county == 'Los Angeles')%>%
+  plot_ly(x = ~Date, y = ~new_cases, type = 'scatter', mode = 'line',
+          hoverinfo = 'text',
+          text = ~paste( paste(county, ':', sep = ''), paste(' Date: ', Date, sep = ''),
+                         paste(' New Cases: ', new_cases, sep = ''), sep='<br>'), width = 800)
+
+time_series <- subplot(line, line2, nrows = 2, shareX = TRUE)
+
+time_series
+```
+
+<br>
+
+## Incidence Rate Normalized
 ```{r, echo=FALSE}
-#Could save for another visual with Covid cases on AQI daily for LA County
-# AQI%>%
-#   filter(COUNTY == 'Los Angeles')%>%
-#   plot_ly(x = ~Date, y = ~MeanAQI,
-#           type = 'scatter', mode = 'line',
-#           hoverinfo = 'text',
-#           text = ~paste( paste(COUNTY, ":", sep=""), paste(' Avg AQI: ', MeanAQI, sep=""),
-#            paste(" Avg PM 2.5: ", MeanPM2.5, sep=""), sep = "<br>"))%>%
-#   layout(title = 'LA County', yaxis = list(title = 'AQI Value'),
-#          xaxis = list(title = 'Date'))
+map_merge <- merge(mapdf, Popmapdf, by = 'fips')
+
+map_merge <- map_merge%>%
+  mutate(rate = Confirmed/TOT_POP)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# Incidence Rate of Covid Cases Normalized by County Population
+incidence_rate <- plot_usmap(data = map_merge, values='rate', include = 'CA')+
+  scale_fill_continuous(low = 'white', high = 'red', name = 'Incidence Rate')+
+  labs(title = 'Incidence Rate of Covid Cases',
+       caption = paste('As of ', as.Date(max(mapdf$Date))))+
+  theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
+        legend.title = element_text(size = 14), legend.text = element_text(size = 12))
+
+ggplotly(incidence_rate, width = 800)
 ```
 
