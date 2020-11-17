@@ -134,7 +134,7 @@ prevalence <- plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
 ### Incidence Figure 1
 ```{r, warning=FALSE, message=FALSE}
 # Hover info of county FIPS code and covid cases within the county from the max date
-ggplotly(incidence, width = 800)
+ggplotly(incidence, width = 800, tooltip = 'group')
 ```
 
 ### Prevalence Figure 2
@@ -308,8 +308,8 @@ map_merge <- map_merge%>%
 ```{r, message=FALSE, warning=FALSE}
 # Incidence Rate of Covid Cases Normalized by County Population
 incidence_rate <- plot_usmap(data = map_merge, values='rate', include = 'CA')+
-  scale_fill_continuous(low = 'white', high = 'red', name = 'Incidence Rate')+
-  labs(title = 'Incidence Rate of Covid Cases',
+  scale_fill_continuous(low = 'white', high = 'red', name = 'Prevalence Rate')+
+  labs(title = 'Prevalence Rate of Covid Cases',
        caption = paste('As of ', as.Date(max(mapdf$Date))))+
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
