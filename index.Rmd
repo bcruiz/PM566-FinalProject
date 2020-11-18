@@ -26,7 +26,7 @@ library(plotly)
 
 <br>
 
-When the pandemic first started in early March and the effects of the corona virus inhibiting a person's ability to breathe I first thought if our state's air pollution would also be a contributor to contracting the virus. With air pollution being so different in all of the 58 counties within California, I wanted to see if contracting confirmed cases of covid would also be on the rise if a person's breathing ability was already impacted by air pollution.
+When the pandemic first started in early March and the effects of the corona virus inhibiting a person's ability to breathe I first thought if our state's air pollution would also be a contributor to contracting the virus. With air pollution being so different in all of the 58 counties within California, I wanted to see if contracting confirmed cases of covid would also be on the rise if a person's breathing ability was already impacted by air pollution. My hypothesis that I want to further explore is whether there is an association between air quality and confirmed cases of covid amongst people within the counties of California.
 
 <br>
 
@@ -302,14 +302,15 @@ time_series
 map_merge <- merge(mapdf, Popmapdf, by = 'fips')
 
 map_merge <- map_merge%>%
-  mutate(rate = Confirmed/TOT_POP)
+  mutate(rate = Confirmed/TOT_POP,
+         ratePer1k = rate * 1000)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
 # Incidence Rate of Covid Cases Normalized by County Population
-incidence_rate <- plot_usmap(data = map_merge, values='rate', include = 'CA')+
-  scale_fill_continuous(low = 'white', high = 'red', name = 'Prevalence Rate')+
-  labs(title = 'Prevalence Rate of Covid Cases',
+incidence_rate <- plot_usmap(data = map_merge, values='ratePer1k', include = 'CA')+
+  scale_fill_continuous(low = 'white', high = 'red', name = 'Per 1K Persons')+
+  labs(title = 'Attack Rate of Covid Cases',
        caption = paste('As of ', as.Date(max(mapdf$Date))))+
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
