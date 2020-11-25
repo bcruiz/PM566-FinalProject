@@ -4,7 +4,7 @@ navbar:
   title: "PM566 - Final Project"
   left:
     - text: "Home"
-      href: FinalProject.html
+      href: index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/USCbiostats/PM566

@@ -1,11 +1,7 @@
 ---
-title: "Environmental Effects on Covid-19"
+title: "Final Report"
 author: "Brandyn Ruiz"
-date: "11/13/2020"
-output: 
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+output: pdf_document
 ---
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
@@ -24,13 +20,9 @@ library(plotly)
 
 # Website Home
 
-<br>
-
 ## Introduction
 
 When the pandemic first started in early March and the effects of the corona virus inhibiting a person's ability to breathe I first thought if our state's air pollution would also be a contributor to contracting the virus. With air pollution being so different in all of the 58 counties within California, I wanted to see if contracting confirmed cases of covid would also be on the rise if a person's breathing ability was already impacted by air pollution. My hypothesis that I want to further explore is whether there is an association between air quality and confirmed cases of covid amongst people within the counties of California.
-
-<br>
 
 ## Covid Cases within the States
 ```{r Covid Github, message=FALSE, warning=FALSE}
@@ -82,16 +74,14 @@ for (i in 1:length(county_list)) {
 }
 ```
 
-<br>
-
 ## Incidence Cases Across the Pandemic 
 ```{r COVID Visual by County, warning=FALSE, message=FALSE}
 # Time series visual of incidence cases from the start of the pandemic
-p1<-ggplot(covidGithubmelt, aes(Date, new_cases, color = county))+
+ggplot(covidGithubmelt, aes(Date, new_cases, color = county))+
   geom_line()+
   geom_point(size = .5, alpha = 0.5)+
-  labs(title = 'Incidences of Covid Cases in California by County', y = 'New Cases', color = 'County')
-ggplotly(p1, width = 800)
+  labs(title = 'Incidences of Covid Cases in California by County', y = 'New Cases')+
+  theme(legend.position = 'none')
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -103,11 +93,9 @@ mapdf <- covidGithubmelt%>%
   rename(fips = FIPS)
 ```
 
-<br>
-
 ## Incidence Cases
 ```{r Spatial Visualization of COVID by County, warning=FALSE}
-incidence <- plot_usmap(data = mapdf, values='new_cases', include = 'CA')+
+plot_usmap(data = mapdf, values='new_cases', include = 'CA')+
   scale_fill_continuous(low = 'white', high = 'red', name = 'Confirmed Cases', label = scales::comma)+
   labs(title = 'Incidence Cases by California County',
        subtitle = 'Source: Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)',
@@ -116,11 +104,9 @@ incidence <- plot_usmap(data = mapdf, values='new_cases', include = 'CA')+
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
 ```
 
-<br>
-
 ## Total Confirmed Cases
 ```{r Grand Total Confirmed Cases, warning=FALSE}
-prevalence <- plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
+plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
   scale_fill_continuous(low = 'white', high = 'red', name = 'Confirmed Cases', label = scales::comma)+
   labs(title = 'Total Cases in California by County',
        subtitle = 'Source: Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)',
@@ -129,26 +115,13 @@ prevalence <- plot_usmap(data = mapdf, values='Confirmed', include = 'CA')+
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
 ```
 
-<br>
-
-## Exploration of Covid Cases within California {.tabset}
+## Exploration of Covid Cases within California
 
 ### Figure 1: Incidence
-```{r, warning=FALSE, message=FALSE}
-# Hover info of county FIPS code and covid cases within the county from the max date
-ggplotly(incidence, width = 800)
-```
+
 
 ### Figure 2: Prevalence
-```{r, warning=FALSE, message=FALSE}
-# Grand total of covid cases at the start of the pandemic
-# until the max date being the day before
-prevalence
-```
 
-## {-}
-
-<br>
 
 ## US Census data of California
 ```{r Population Visualizations, warning=FALSE, message=FALSE}
@@ -158,12 +131,7 @@ CAcensus <- read_csv("data/cc-est2019-alldata-06.csv")
 ```{r, echo=FALSE}
 # 2019 Population Estimate of each CA county from US Census
 CApop <- CAcensus%>%
-  filter(YEAR == 12, AGEGRP == 0)%>%
-  mutate(OT_MALE = IA_MALE+NA_MALE,
-         OT_FEMALE = IA_FEMALE+NA_FEMALE)%>%
-  select(COUNTY, STNAME, CTYNAME, YEAR, AGEGRP, TOT_POP, TOT_MALE, TOT_FEMALE, WA_MALE,
-         WA_FEMALE, BA_MALE, BA_FEMALE, H_MALE, H_FEMALE, AA_MALE, AA_FEMALE, OT_MALE,
-         OT_FEMALE)
+  filter(YEAR == 12, AGEGRP == 0)
 
 CApop$COUNTY <- paste0(6, CApop$COUNTY)
 
@@ -172,8 +140,6 @@ Popmapdf <- CApop%>%
   select(COUNTY, TOT_POP)%>%
   rename(fips = COUNTY)
 ```
-
-<br>
 
 ## County Populations Within California
 ```{r, warning=FALSE}
@@ -195,28 +161,29 @@ CApop_today <- CApop%>%
 # Merging the grand total of covid cases with county population
 cvd_pop<- merge(covidGithubmelt_today, CApop_today, by = 'FIPS')
 
-cvd_pop$per100k = as.numeric(format(round(cvd_pop$Confirmed/(cvd_pop$TOT_POP/100000)),
+cvd_pop$per100k = as.numeric(format(round(cvd_pop$Confirmed/(cvd_pop$TOT_POP/100000),1),
                                       nsmall=1))
 ```
-
-<br>
 
 ## Running Total of Confirmed Cases by Population of Counties
 ```{r, warning=FALSE, message=FALSE}
 # Visual of how county population influences covid cases
-cvd_pop%>% 
-  plot_ly(x = ~TOT_POP, y = ~Confirmed,
-          type = 'scatter', mode = 'markers', color = ~county,
-          size = ~TOT_POP, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
-          hoverinfo = 'text',
-          text = ~paste( paste(county, ":", sep=""), paste(" Cases per 100k: ", per100k, sep=""),
-                         paste(' Population: ', TOT_POP, sep=""), sep = "<br>"),
-          width = 800)%>%
-  layout(title = "Covid Cases vs Population of Each County",
-                  yaxis = list(title = "Cases per 100k"), xaxis = list(title = "Population"))
-```
+# cvd_pop%>% 
+#   plot_ly(x = ~TOT_POP, y = ~Confirmed,
+#           type = 'scatter', mode = 'markers', color = ~county,
+#           size = ~TOT_POP, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
+#           hoverinfo = 'text',
+#           text = ~paste( paste(county, ":", sep=""), paste(" Cases per 100k: ", per100k, sep=""),
+#                          paste(' Population: ', TOT_POP, sep=""), sep = "<br>"),
+#           width = 800)%>%
+#   layout(title = "Covid Cases vs Population of Each County",
+#                   yaxis = list(title = "Cases per 100k"), xaxis = list(title = "Population"))
 
-<br>
+# ggplot(cvd_pop, aes(TOT_POP, Confirmed, color = county, size = TOT_POP))+
+#   geom_point()
+
+# Could mention plot from website
+```
 
 ## Enviornmental Protection Agency (EPA) Air Quality Index
 ```{r, message=FALSE}
@@ -254,10 +221,8 @@ AQI <- AQI%>%
   distinct()
 ```
 
-<br>
-
 ## Air Quality Within California
-```{r AQI Visual, message=FALSE, warning=FALSE}
+```{r AQI Visual, message=FALSE, warning=FALSE, eval=FALSE}
 # Averaged AQI for each county
 AQI%>%
   plot_ly(x = ~COUNTY, y = ~MeanAQI, type = 'box', color = ~COUNTY, width = 750)%>%
@@ -265,18 +230,10 @@ AQI%>%
          xaxis = list(title = 'County'), showlegend = FALSE)
 ```
 
-<br>
-
-----
-
-<br>
-
 # New Page
 
-<br>
-
 ## Combined Visuals
-```{r}
+```{r, eval=FALSE}
 # Stacked visuals of both AQI over covid cases during the pandemic
 
 # Air Quality over course of the pandemic
@@ -302,8 +259,6 @@ time_series <- subplot(line, line2, nrows = 2, shareX = TRUE)
 time_series
 ```
 
-<br>
-
 ## Attack Rate Normalized
 ```{r, echo=FALSE}
 map_merge <- merge(mapdf, Popmapdf, by = 'fips')
@@ -323,19 +278,12 @@ map_merge <- map_merge%>%
 
 ```{r, message=FALSE, warning=FALSE}
 # Incidence Rate of Covid Cases Normalized by County Population
-attack_rate <- plot_usmap(data = map_merge, values='ratePer1k', include = 'CA')+
-  #scale_fill_distiller(type = 'qual',palette = 'YlOrRd')+
-  scale_fill_continuous(low = 'white', high = 'red', name = 'Cases Per 1K Persons')+
+plot_usmap(data = map_merge, values='ratePer1k', include = 'CA')+
+  # scale_fill_distiller(type = 'qual',palette = 'YlOrRd')+
+  scale_fill_continuous(low = 'white', high = 'red', name = 'Per 1K Persons')+
   labs(title = 'Attack Rate of Covid Cases',
        caption = paste('As of ', as.Date(max(mapdf$Date))))+
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.25, size = 18), legend.position = "right",
         legend.title = element_text(size = 14), legend.text = element_text(size = 12))
-
-ggplotly(attack_rate, width = 800)
 ```
-
-```{r}
-
-```
-
 
