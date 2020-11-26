@@ -12,8 +12,6 @@ output:
 library(readr)
 library(dplyr)
 library(data.table)
-library(httr)
-library(rjson)
 library(ggplot2)
 library(usmap)
 library(RColorBrewer)
