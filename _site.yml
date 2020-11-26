@@ -5,6 +5,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Report PDF"
+      href: https://github.com/bcruiz/PM566-FinalProject/blob/main/FinalReport.pdf
   right:
     - icon: fa-github fa-lg
       href: https://github.com/USCbiostats/PM566

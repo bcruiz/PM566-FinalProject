@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Brandyn Ruiz" />
+
+
+<title>Final Report</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">PM566 - Final Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="https://github.com/bcruiz/PM566-FinalProject/blob/main/FinalReport.pdf">Report PDF</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/USCbiostats/PM566">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://elastic-khorana-70231e.netlify.app/">PM566 Home</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Final Report</h1>
+<h4 class="author">Brandyn Ruiz</h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>With the recent events of covid cases on the rise and steadly holding just barely and with the rise of fires all over California with the sky being orange miles away from the fire for days, this year has definitely been so unusual and unprecedented times. The Corona virus has been found to inhibit respiratory functions of the host and with the recent fires the air quality within many cities of the 58 counties has sky rocketed to concerning levels. Depending on someone’s geographical location and which county they live in, their health could already be at risk due to the air quality alone. Would this make a subject more vulnerable to contracting covid if their respiratory function was already inhibited? My hypothesis that I want to further explore is whether there is an association between air quality and confirmed cases of covid amongst people within the counties of California.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>The data sets that I have used in my analysis were from three different extrenal sources consisting of John Hopkins University’s github repository of <a href="%22https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv%22">daily covid cases</a> by geolocation. The github repository has different datasets of deaths and confirmed cases within the United States from the corona virus and is a compilation from news article sources such as New York Times and Los Angeles Times, as well as Public Health departments of the different counties. Daily Air Quality Index and PM 2.5 concentrations were from the <a href="https://www.epa.gov/outdoor-air-quality-data/download-daily-data">Enviornmental Protection Agency (EPA)</a>. Air Quality Index is measured on a scale from 0 to 500, where it measures the change of pollution in the air, see the figure below to reference the different cutoffs and categories we usually see on our weather and map applications on our phones. PM 2.5 pollutants are small microscopic particles within the air such as dust, spores, pollen, and ash which measure about 2.5 <span class="math inline">\(\mu\)</span>m (micrometers) in diameter. Within the EPA’s website I queried for my own results for all recording sites within the state of interest being California as PM 2.5 being the pollutant. I have found that the query directly from the EPA’s website was much more accurate and updated more frequently than downloading their daily datasets through their API. I have also gathered <a href="https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html">US Census data</a> of predicted 2019 estimates of populations, gender, and race within every county in California.</p>
+<div class="figure">
+<img src="data/air-quality-alerts.png" alt="Air Quality Figure" />
+<p class="caption">Air Quality Figure</p>
+</div>
+<div id="daily-covid-cases" class="section level2">
+<h2>Daily Covid Cases</h2>
+<p>In data wrangling and cleaning the daily covid data we were originally provided 60 observations 1 observation for each county. However, there are only 58 total counties within California, looking more into this the covid dataset has included people who were from ‘unassigned’ counties and ‘Out of CA’, which could represent NA or an omitted response from the person who contracted the virus as well as people who tested positive within California, but are not a resident of California. I have exluded these observations to be exlusive corona virus cases within California for easier match of datasets between counties. We also observe from the raw csv file is that the data is recorded for each day across every county and each new day is a column, with a total of 319 columns as of 11/25 which is reporting data from the previous day. To match a very wide dataset to others such as the AQI from the EPA’s website it needs to be transformed into a longitidinal dataset with dates as columns and the value of covid cases falling into that day as its own value column which is labeled as <code>Confirmed</code> for total confirmed cases. This was eaily done by using the <code>melt()</code> function which we kept our other variables as our ID factors with <code>Date</code> being transformed into the new column and chronologically ordered by each county. Our raw dataset is the grand total of cases since the beginning of the pandemic, a grand total accumulation of cases up until that particular date. This particular variable of <code>Confirmed</code> cases would cause overinflation and I have made a for loop to iterate for each date for every county, taking the subtraction of current covid cases from the previous day to get the incidence or <code>new_cases</code> for that day. As we see in <em>Figure 1</em> the green line represents Los Angeles county and has the largest spike and cyclical trends compared to the other counties. Population of Los Angeles county could be a huge factor in why such a huge difference in cases. A better reference is on my website homepage with interactive text of county and incidence cases. What sticks out the most is the blue line going past the 0 y-axis, which indicates that San Bernadino county had the largest difference from the previous day where there was fewer reported cases. This trend is what we hope to see in the nearby future.</p>
+<p><strong>Figure 1: Incidence Cases Across the Pandemic</strong> <img src="FinalReport_files/figure-html/COVID%20Visual%20by%20County-1.png" width="672" /></p>
+<p><strong>Figure 2: Incidence Cases</strong> <img src="FinalReport_files/figure-html/Spatial%20Visualization%20of%20COVID%20by%20County-1.png" width="672" /></p>
+<p><strong>Figure 3: Prevalence of Confirmed Cases</strong> <img src="FinalReport_files/figure-html/Grand%20Total%20Confirmed%20Cases-1.png" width="672" /></p>
+<p>Our daily cases dataset also provides the <code>FIPS</code> or Federal Information Processing Standards for every county within California. The <code>FIPS</code> is a 5 digit code with the first two representing the state such as California being 06 alphabetically and the next three digits being the particular county such as 037 being for Los Angeles county. With the <code>FIPS</code> variable being included in our dataset I used <code>plot_usmap()</code> function to spatially model the incidence cases of the virus with each county. <em>Figure 2</em> provides a density plot of all the counties in California with the previous day’s data of covid cases, we also see from <em>Figure 3</em> with the grand total prevalence of old and new cases being relatively the same density plot of California with the exception that San Bernadino county is not nearly as red for cases compared to the grand total of cases during the eight months of the pandemic. In both figures we see that Los Angeles county is the brightest and most dense for covid cases within the whole state and does not surprise us as the county has the most people and population per capita.</p>
+</div>
+<div id="us-census-data-of-california" class="section level2">
+<h2>US Census data of California</h2>
+<p>From the US Census data its raw dataset is overwhelming and rather large with each county’s demographic populations such as age group, gender, and race from every year since the 2010 census and population estimates following that until this years census which the data is not publicly available yet. The breakdown of each variable from the raw download can be found within the pdf file in the data folder of my github repository. I chose the 2019 population estimates to get the closest population estimates to this current year to draw analysis from as these estimates would mimic the real populations within each county for 2020. In the raw dataset there are already variables of <code>Total_Male</code> and <code>Total_Female</code> with race being brokendown to gender as well. I made the summation of gender grouped by my race of interest being <code>White</code>, <code>Black</code>, <code>Asian</code>, <code>Hispanic</code>, and <code>Other</code> which consists of Native American and Native Hawaiian populations. I have also recoded the age group variables to include only 3 categories such as age groups 19 and under, 20 to 64, and 65 and over. I grouped each of my new age group variables by county and age group and then summed to gather the grand total within each age group and race for that age group, and then have calculated the perecentages of the age group populations. <code>pct_19</code> which accounts for populations 19 and under as <span class="math inline">\(\frac{\text{TOT_POP}_\text{AGEGRP1}}{\text{TOT_POP}}\)</span> to get the percentage from the total population within the county.</p>
+<p><strong>Figure 4: County Populations Within California</strong> <img src="FinalReport_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>As we see in <em>Figure 4</em> Los Angeles county is by far the greatest in size with over 10 million residents, along with Orange, San Diego, San Bernadino, and Riverside counties as being the most dense for population. Referencing my website will give interactive displays of each county and the actual 2019 population estimates within. Population can be a potential confounding variable for the relationship of air quality on the number of covid cases. The more dense the county is in population would call for more traffic and vechile smog pollution and mamy vecotrs of spread ammongst people.</p>
+</div>
+<div id="enviornmental-protection-agency-epa-air-quality-index" class="section level2">
+<h2>Enviornmental Protection Agency (EPA) Air Quality Index</h2>
+<p>Preparing our Air Quality dataset to be merged with the US Census and daily covid cases I wrangled and cleaned the data matching the Date format. From the raw dataset I noticed that some counties have more daily recorded measures of AQI and PM 2.5 than others. Some counties may have had fewer daily recordings this year due to the virus leaving the sites unmanned or even by the fires that heavily affected some of the counties to have drastic AQI of over 500. In <em>Figure 5</em> we see the distribution of AQI for each county and can see the counties that have extraneous outliers. Counties such as Mariposa with the Creek Fire and Mono county with the Mountain View Fire. To account for the differences I averaged the daily AQI and PM2.5 measures by day for some counties are much larger than other and require more recording sites. Then I averaged the AQI and PM2.5 measures again from all the single daily averages to account for the size differences in counties.</p>
+<p><strong>Figure 5: Air Quality Within California</strong> <img src="FinalReport_files/figure-html/AQI%20Visual-1.png" width="672" /></p>
+<p><strong>Figure 6: Combined Visuals</strong> <img src="FinalReport_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>In comparing the two datasets of Air Quality and Daily covid cases in <em>Figure 6</em> aligning the two graphs to give an overlay starting at the beginning of the year with AQI and the start of the pandemic we see interesting trends of a spike happening in both datasets during the early days in the month of July most likely after the big holiday Fourth of July. This also shows the affect of air pollution on the number of covid cases as there were many fireworks shot in th sky contributing to more PM 2.5 pollutants there was also an increase in cases. In my website my interactive visual will give the actual number of AQI, covid cases, and the date this all occured in Los Angeles county.</p>
+<p><strong>Figure 7: Attack Rate of Covid Cases</strong> <img src="FinalReport_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>One figure to draw attention to is <em>Figure 7</em> I combined the two datasets of the US Census data to get the <code>TOT_POP</code> of each county and daily covid cases to get the total number of prevalence cases <code>Confirmed</code>. I normalized the attack rate of number of people contracting covid by the population of the county, <span class="math inline">\(\frac{\text{Confirmed}}{\text{TOT_POP}} \times 10000\)</span> = <code>rateper1k</code>. Creating a spatial density map of California by county of the attack rate per 1,000 persons we can see how each county is compared to each other when accounting for their population size. We see that Imperial county has the highest attack rate of 85.9 per 1,000 persons and has a total population of 181,215, meaning that there would be approximately 86 people out of 1,000 within Imperial county would contract the corona virus. Also Kings county with an attack rate of 67 per 1,000 persons and has a total population of 152,940.</p>
+<p><strong>Table 1: AQI County Categories</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">County</th>
+<th align="right">Mean_AQI</th>
+<th align="right">Mean_PM2.5</th>
+<th align="left">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alameda</td>
+<td align="right">37.18892</td>
+<td align="right">10.889011</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Butte</td>
+<td align="right">42.06522</td>
+<td align="right">14.658618</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Calaveras</td>
+<td align="right">40.75768</td>
+<td align="right">12.478157</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Colusa</td>
+<td align="right">40.78526</td>
+<td align="right">13.437233</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Contra Costa</td>
+<td align="right">38.84119</td>
+<td align="right">11.257862</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Del Norte</td>
+<td align="right">33.96471</td>
+<td align="right">10.150000</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">El Dorado</td>
+<td align="right">12.07500</td>
+<td align="right">2.862500</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Fresno</td>
+<td align="right">47.22630</td>
+<td align="right">15.237381</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Glenn</td>
+<td align="right">46.46885</td>
+<td align="right">15.869180</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Humboldt</td>
+<td align="right">27.94366</td>
+<td align="right">6.743662</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Imperial</td>
+<td align="right">39.92153</td>
+<td align="right">10.354000</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Inyo</td>
+<td align="right">35.71946</td>
+<td align="right">12.180047</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Kern</td>
+<td align="right">44.05202</td>
+<td align="right">13.409081</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Kings</td>
+<td align="right">56.62305</td>
+<td align="right">17.882970</td>
+<td align="left">Moderate</td>
+</tr>
+<tr class="odd">
+<td align="left">Lake</td>
+<td align="right">14.13333</td>
+<td align="right">3.366667</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Los Angeles</td>
+<td align="right">48.33325</td>
+<td align="right">13.438065</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Madera</td>
+<td align="right">49.52025</td>
+<td align="right">15.810436</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Marin</td>
+<td align="right">30.48742</td>
+<td align="right">8.688050</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Mariposa</td>
+<td align="right">48.19355</td>
+<td align="right">20.426935</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Mendocino</td>
+<td align="right">29.25824</td>
+<td align="right">7.152747</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Merced</td>
+<td align="right">47.01429</td>
+<td align="right">14.500476</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Mono</td>
+<td align="right">50.29063</td>
+<td align="right">25.836542</td>
+<td align="left">Moderate</td>
+</tr>
+<tr class="odd">
+<td align="left">Monterey</td>
+<td align="right">27.50492</td>
+<td align="right">8.249094</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Napa</td>
+<td align="right">34.40777</td>
+<td align="right">10.017152</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Nevada</td>
+<td align="right">33.50415</td>
+<td align="right">10.272819</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Orange</td>
+<td align="right">43.73240</td>
+<td align="right">11.821170</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Placer</td>
+<td align="right">38.48873</td>
+<td align="right">12.427343</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Plumas</td>
+<td align="right">47.60139</td>
+<td align="right">17.828562</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Riverside</td>
+<td align="right">40.65813</td>
+<td align="right">10.809516</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Sacramento</td>
+<td align="right">40.49550</td>
+<td align="right">12.668012</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">San Benito</td>
+<td align="right">33.17619</td>
+<td align="right">9.332381</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">San Bernardino</td>
+<td align="right">44.25559</td>
+<td align="right">11.949591</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">San Diego</td>
+<td align="right">41.14893</td>
+<td align="right">10.830919</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">San Francisco</td>
+<td align="right">37.11250</td>
+<td align="right">10.660312</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">San Joaquin</td>
+<td align="right">42.22723</td>
+<td align="right">13.200285</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">San Luis Obispo</td>
+<td align="right">33.17909</td>
+<td align="right">9.243970</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">San Mateo</td>
+<td align="right">34.12893</td>
+<td align="right">9.866667</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Barbara</td>
+<td align="right">29.43758</td>
+<td align="right">7.745347</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Santa Clara</td>
+<td align="right">38.33954</td>
+<td align="right">11.049689</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Cruz</td>
+<td align="right">28.55901</td>
+<td align="right">9.272516</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Shasta</td>
+<td align="right">15.78571</td>
+<td align="right">3.897143</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Siskiyou</td>
+<td align="right">28.66978</td>
+<td align="right">9.896262</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Solano</td>
+<td align="right">39.96406</td>
+<td align="right">11.585313</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Sonoma</td>
+<td align="right">28.98413</td>
+<td align="right">8.175238</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Stanislaus</td>
+<td align="right">44.64271</td>
+<td align="right">13.793594</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Sutter</td>
+<td align="right">48.65823</td>
+<td align="right">16.009019</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Tehama</td>
+<td align="right">22.52941</td>
+<td align="right">5.578235</td>
+<td align="left">Good</td>
+</tr>
+<tr class="even">
+<td align="left">Trinity</td>
+<td align="right">31.33333</td>
+<td align="right">10.232292</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Tulare</td>
+<td align="right">58.32914</td>
+<td align="right">18.357986</td>
+<td align="left">Moderate</td>
+</tr>
+<tr class="even">
+<td align="left">Ventura</td>
+<td align="right">30.46444</td>
+<td align="right">7.826894</td>
+<td align="left">Good</td>
+</tr>
+<tr class="odd">
+<td align="left">Yolo</td>
+<td align="right">41.51398</td>
+<td align="right">13.209627</td>
+<td align="left">Good</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p><strong>Table 2: Preliminary Poisson Model</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="right">rr</th>
+<th align="right">2.5 %</th>
+<th align="right">97.5 %</th>
+<th align="right">pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.0003167</td>
+<td align="right">0.0002753</td>
+<td align="right">0.0003642</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">TOT_MALE</td>
+<td align="right">0.9999884</td>
+<td align="right">0.9999875</td>
+<td align="right">0.9999893</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">TOT_FEMALE</td>
+<td align="right">0.9999884</td>
+<td align="right">0.9999876</td>
+<td align="right">0.9999893</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">White</td>
+<td align="right">1.0000124</td>
+<td align="right">1.0000114</td>
+<td align="right">1.0000133</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="right">1.0000141</td>
+<td align="right">1.0000131</td>
+<td align="right">1.0000151</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hispanic</td>
+<td align="right">0.9999993</td>
+<td align="right">0.9999992</td>
+<td align="right">0.9999994</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Asian</td>
+<td align="right">1.0000115</td>
+<td align="right">1.0000106</td>
+<td align="right">1.0000124</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">1.0000099</td>
+<td align="right">1.0000083</td>
+<td align="right">1.0000115</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">pct_19</td>
+<td align="right">4900.2000395</td>
+<td align="right">4113.1311092</td>
+<td align="right">5837.8786841</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">pct_2064</td>
+<td align="right">24.0052745</td>
+<td align="right">19.5794783</td>
+<td align="right">29.4314892</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">avgAQI</td>
+<td align="right">1.0372287</td>
+<td align="right">1.0355150</td>
+<td align="right">1.0389452</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">avgPM2.5</td>
+<td align="right">0.9174265</td>
+<td align="right">0.9134849</td>
+<td align="right">0.9213851</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 3: Final Negative Binomial Model</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="right">rr</th>
+<th align="right">2.5 %</th>
+<th align="right">97.5 %</th>
+<th align="right">pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">6.920000e-05</td>
+<td align="right">0.0000108</td>
+<td align="right">4.438000e-04</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">TOT_MALE</td>
+<td align="right">9.999886e-01</td>
+<td align="right">0.9999608</td>
+<td align="right">1.000016e+00</td>
+<td align="right">0.4221403</td>
+</tr>
+<tr class="odd">
+<td align="left">TOT_FEMALE</td>
+<td align="right">9.999833e-01</td>
+<td align="right">0.9999528</td>
+<td align="right">1.000014e+00</td>
+<td align="right">0.2846207</td>
+</tr>
+<tr class="even">
+<td align="left">White</td>
+<td align="right">1.000015e+00</td>
+<td align="right">0.9999850</td>
+<td align="right">1.000046e+00</td>
+<td align="right">0.3203241</td>
+</tr>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="right">1.000018e+00</td>
+<td align="right">0.9999845</td>
+<td align="right">1.000051e+00</td>
+<td align="right">0.2957155</td>
+</tr>
+<tr class="even">
+<td align="left">Hispanic</td>
+<td align="right">9.999988e-01</td>
+<td align="right">0.9999955</td>
+<td align="right">1.000002e+00</td>
+<td align="right">0.4832566</td>
+</tr>
+<tr class="odd">
+<td align="left">Asian</td>
+<td align="right">1.000014e+00</td>
+<td align="right">0.9999846</td>
+<td align="right">1.000043e+00</td>
+<td align="right">0.3524272</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">1.000003e+00</td>
+<td align="right">0.9999483</td>
+<td align="right">1.000058e+00</td>
+<td align="right">0.9096048</td>
+</tr>
+<tr class="odd">
+<td align="left">pct_19</td>
+<td align="right">5.365662e+04</td>
+<td align="right">2628.9814689</td>
+<td align="right">1.095113e+06</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">pct_2064</td>
+<td align="right">1.866367e+02</td>
+<td align="right">7.8520901</td>
+<td align="right">4.436174e+03</td>
+<td align="right">0.0012174</td>
+</tr>
+<tr class="odd">
+<td align="left">avgAQI</td>
+<td align="right">9.995592e-01</td>
+<td align="right">0.9738794</td>
+<td align="right">1.025916e+00</td>
+<td align="right">0.9735132</td>
+</tr>
+<tr class="even">
+<td align="left">avgPM2.5</td>
+<td align="right">1.013048e+00</td>
+<td align="right">0.9576485</td>
+<td align="right">1.071651e+00</td>
+<td align="right">0.6514247</td>
+</tr>
+</tbody>
+</table>
+<p>In combing all three datasets of daily covid cases, EPA daily air quality data, and the US Census of demogrpahic populations I decided to run a poisson model running a full model with all my variables included as <code>Confirmed</code> cases as my predicted y variable <span class="math inline">\(\hat{y}\)</span>. A Poisson model would be most appropriate because the count data of confirmed cases is strictly [0, <span class="math inline">\(\infty\)</span>) as our other variables as well, with the Poisson model I can also include an offset variable of <code>TOT_POP</code> to normalize every county in California to obtain the attack rate. The first Poisson model ran with all variables being statistically significant with a p-value less than our significance level of 0.05. However, <code>pct_65over</code> was not statistically significant and I continued the next model exluding this variable. We find in <em>Table 2</em> the relative ratios for all the variables except for <code>pct_19</code> and <code>pct_2064</code> are relatively null. Meaning that the percentage of age groups 19 and younger, and 20 to 64 are at a much higher risk of contracting covid. The AIC for the Poisson model is 19757 which is extremly high and does not compare well with other models if they were to have a lower AIC, as a lower value would indicate a better fit. Another measure of checking our model’s fit is the dispersion test <span class="math inline">\(H_0: \tau = 0\)</span> and <span class="math inline">\(H_a: \tau \ne 0\)</span>, our model has a dispersion of 408.63 and a p-value of 0.0013 which rejects the null hypothesis and we can conclude that there is overdispersion.</p>
+<p>Oversidpersion would cause our model to have smaller significance in our paramters as our p-value would be smaller and cause our estimated standard errors to be smaller than what is true. A Negative Binomial model would account for such an overdispersion and we see an improvement in our full model excluding <code>pct_65over</code> with the offset of <code>TOT_POP</code> as our AIC value is much lower at 917.30 with our <span class="math inline">\(\theta = 12.63\)</span>. In testing our model’s goodness of fit, the deviance GOF test does not show any departure from good fit as our p-value is not significant with a value of 0.0856.</p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>The year 2020 will forever be memorable with all the more peculiar as the US Census was administered and I believe we will have better accounts of the true population in 2020 compared to the algorithm generated 2019 population estimate and even more hidden trends discovered. For future notes on running this model with the 2020 US Census day would be to administer interaction effects for the age groups and race to see if its significant in its relation with attack ratio of corona virus. I would include other variables such as population density per square mile to get the idea of how crowded or spacious other counties are with their populations and with the closer proximity of people how that effects the attack ratio of contracting covid. Also to get a better understanding of how air pollution directly relates to the contracting of the virus to include a lag time of 14 days when a patient was diagnosed with the virus and comparing the air quality 14 days prior of their diagnostic screening.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

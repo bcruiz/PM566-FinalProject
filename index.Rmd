@@ -28,7 +28,7 @@ library(plotly)
 
 ## Introduction
 
-When the pandemic first started in early March and the effects of the corona virus inhibiting a person's ability to breathe I first thought if our state's air pollution would also be a contributor to contracting the virus. With air pollution being so different in all of the 58 counties within California, I wanted to see if contracting confirmed cases of covid would also be on the rise if a person's breathing ability was already impacted by air pollution. My hypothesis that I want to further explore is whether there is an association between air quality and confirmed cases of covid amongst people within the counties of California.
+  With the recent events of covid cases on the rise and steadly holding just barely and with the rise of fires all over California with the sky being orange miles away from the fire for days, this year has definitely been so unusual and unprecedented times. The Corona virus has been found to inhibit respiratory functions of the host and with the recent fires the air quality within many cities of the 58 counties has sky rocketed to concerning levels. Depending on someone’s geographical location and which county they live in, their health could already be at risk due to the air quality alone. Would this make a subject more vulnerable to contracting covid if their respiratory function was already inhibited? My hypothesis that I want to further explore is whether there is an association between air quality and confirmed cases of covid amongst people within the counties of California.
 
 <br>
 
