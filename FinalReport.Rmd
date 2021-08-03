@@ -3,7 +3,6 @@ title: "Final Report"
 author: "Brandyn Ruiz"
 output:
   word_document: default
-  pdf_document: default
 fig_width: 12
 fig_height: 8
 ---
